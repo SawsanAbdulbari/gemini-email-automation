@@ -1,0 +1,142 @@
+# .gitignore
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv/
+.python-version
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+.env.production
+.env.staging
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swp
+*~
+
+# Logs
+*.log
+logs/
+email_automation.log
+
+# Test
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Project specific
+test_emails/
+email_responses/
+config_local.py
+*.bak
+backup_*/
+processed_emails.json
+
+# Sensitive data - IMPORTANT!
+config.py  # Remove this line only after switching to config_secure.py
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Build and distribution
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# Poetry
+poetry.lock
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# Pyre type checker
+.pyre/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# API keys and secrets
+secrets.json
+credentials.json
+service_account.json
+*.pem
+*.key
+*.crt
+
+# Email data
+emails/
+email_data/
+*.eml
+*.msg
+
+# Cache directories
+.cache/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+
+# Backup files
+*.backup
+*.old
+*.orig
+
+# GitHub specific
+.github/
+*.github
+
+
+helper/
+examples/
+docs/
+
+Postman/

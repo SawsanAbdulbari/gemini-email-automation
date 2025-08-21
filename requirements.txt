@@ -1,0 +1,31 @@
+# requirements.txt
+# Gemini Email Automation System Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core Dependencies
+google-generativeai>=0.3.0
+python-dotenv>=1.0.0
+
+# Email Processing
+# Note: These are part of Python standard library but listed for clarity
+# imaplib (built-in)
+# smtplib (built-in)
+# email (built-in)
+
+# Optional Dependencies for Enhanced Features
+requests>=2.31.0        # For webhook integration (optional)
+pandas>=2.0.0          # For data analysis and reporting (optional)
+matplotlib>=3.7.0      # For visualization (optional)
+
+# Development Dependencies
+pytest>=7.4.0          # For running tests
+pytest-cov>=4.1.0      # For test coverage
+black>=23.0.0          # For code formatting
+flake8>=6.0.0          # For code linting
+
+# For HTML email support
+markdown>=3.4.0
+html2text>=2020.1.16
+
+# Security Dependencies
+cryptography>=41.0.0   # For secure credential storage (optional)
