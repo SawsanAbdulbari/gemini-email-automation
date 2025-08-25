@@ -6,11 +6,9 @@
 - [Project Overview](#project-overview)
 - [Prerequisites](#prerequisites)
 - [Quick Start Guide](#quick-start-guide)
-- [Method 1: Python Implementation](#method-1-python-implementation)
-- [Method 2: Postman Implementation](#method-2-postman-implementation)
+- [Python Implementation](#method-1-python-implementation)
 - [Troubleshooting](#troubleshooting)
 - [Testing the System](#testing-the-system)
-- [Assignment Guidelines](#assignment-guidelines)
 - [Support](#support)
 
 ## 🎯 Project Overview
@@ -35,7 +33,6 @@ This project demonstrates how to build an AI-powered email response automation s
 ### Required Software
 - **Python 3.8+** ([Download](https://www.python.org/downloads/))
 - **VS Code** ([Download](https://code.visualstudio.com/))
-- **Postman** ([Download](https://www.postman.com/downloads/))
 - **Git** (optional but recommended) ([Download](https://git-scm.com/))
 - **Gmail Account** with 2-Factor Authentication enabled
 
@@ -85,7 +82,7 @@ pip install google-generativeai python-dotenv
 
 ---
 
-## 🐍 Method 1: Python Implementation
+## 🐍 Python Implementation
 
 ### 1️⃣ Installation Setup
 
@@ -177,21 +174,13 @@ gemini-email-automation/
 │   ├── gemini_email.py       # Gemini API integration
 │   ├── email_filter.py       # Spam and security filtering
 │   ├── email_tracker.py      # Duplicate prevention
-│   └── main.py               # Main application (v4.0 with fixes)
+│   └── main.py               # Main application (v4.0)
 │
-├── 📁 test/                  # Test suite
-│   ├── test_setup.py         # Setup verification
+├── 📁 test/                     # Test suite
+│   ├── test_setup.py             # Setup verification
+│   ├── test_email_format_fix.py  
 │   └── test_email_automation.py  # Unit tests
 │
-├── 📁 Postman/              # API testing
-│   ├── Gemini_Email_Collection.json
-│   └── Gemini_Email_Environment.json
-│
-├── 📁 docs/                 # Documentation
-│   ├── README.md            # Main documentation
-│   └── PROJECT_SUMMARY.md  # Project overview
-│
-├── .env                     # Your credentials 
 ├── .env.example            # Template for credentials
 ├── .gitignore              # Git ignore rules
 └── requirements.txt        # Python dependencies
@@ -212,45 +201,6 @@ test_emails/
 ### 4️⃣ Running the Python Application
 
 #### Test Your Setup First
-Create a test script `test_setup.py`:
-
-```python
-# test_setup.py
-import google.generativeai as genai
-from config import GEMINI_API_KEY, EMAIL_CONFIG
-
-def test_gemini_connection():
-    """Test if Gemini API is working"""
-    try:
-        genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel('gemini-2.0-flash')
-        response = model.generate_content("Say 'Hello, World!'")
-        print("✅ Gemini API connected successfully!")
-        print(f"Response: {response.text}")
-        return True
-    except Exception as e:
-        print(f"❌ Gemini API Error: {str(e)}")
-        return False
-
-def test_email_config():
-    """Test if email configuration is set"""
-    if EMAIL_CONFIG['email_address'] == "your.email@gmail.com":
-        print("❌ Please update your email configuration in .env file")
-        return False
-    print("✅ Email configuration looks good!")
-    return True
-
-if __name__ == "__main__":
-    print("Testing your setup...\n")
-    gemini_ok = test_gemini_connection()
-    email_ok = test_email_config()
-    
-    if gemini_ok and email_ok:
-        print("\n🎉 All tests passed! You're ready to run the main application.")
-    else:
-        print("\n⚠️ Please fix the issues above before running the main application.")
-```
-
 Run the test:
 ```bash
 python test_setup.py
@@ -304,190 +254,6 @@ Body: Hi, I'm getting an error message when trying to log in. It says "Invalid c
 ```
 Subject: Suggestion for new feature
 Body: Love your product! It would be great if you could add dark mode support. Many users would appreciate this feature for nighttime use.
-```
-
----
-
-## 📮 Method 2: Postman Implementation
-
-### 1️⃣ Postman Setup
-
-#### A. Create Postman Account
-1. Open Postman and sign up/sign in
-2. Create a new Workspace: "Gemini Email Automation"
-
-#### B. Set Up Environment Variables
-1. Click on **Environments** in the left sidebar
-2. Click **Create Environment**
-3. Name it: "Gemini API Environment"
-4. Add these variables:
-
-| Variable Name | Type | Initial Value | Current Value |
-|--------------|------|---------------|---------------|
-| gemini_api_key | secret | YOUR_API_KEY | YOUR_API_KEY |
-| base_url | default | https://generativelanguage.googleapis.com | (same) |
-| model | default | gemini-2.0-flash | (same) |
-
-5. Click **Save**
-
-### 2️⃣ Create API Collection
-
-#### A. Create New Collection
-1. Click **Collections** → **Create Collection**
-2. Name: "Gemini Email Responses"
-3. Description: "Automated email response generation using Gemini API"
-
-#### B. Add Authentication
-1. Click on the collection name
-2. Go to **Authorization** tab
-3. Type: **API Key**
-4. Key: `key`
-5. Value: `{{gemini_api_key}}`
-6. Add to: **Query Params**
-
-### 3️⃣ Create API Requests
-
-#### Request 1: Test Connection
-```
-Name: Test Gemini Connection
-Method: POST
-URL: {{base_url}}/v1/models/{{model}}:generateContent?key={{gemini_api_key}}
-
-Headers:
-Content-Type: application/json
-
-Body (raw JSON):
-{
-  "contents": [{
-    "parts": [{
-      "text": "Say hello!"
-    }]
-  }]
-}
-```
-
-#### Request 2: Generate Email Response - Complaint
-```
-Name: Handle Customer Complaint
-Method: POST
-URL: {{base_url}}/v1/models/{{model}}:generateContent?key={{gemini_api_key}}
-
-Headers:
-Content-Type: application/json
-
-Body (raw JSON):
-{
-  "contents": [{
-    "parts": [{
-      "text": "You are a customer support assistant. Generate a professional, apologetic response to this complaint email:\n\nFrom: john.doe@example.com\nSubject: Product not working\nBody: Your product stopped working after 2 days. I'm very disappointed and want a refund.\n\nGuidelines:\n1. Apologize sincerely\n2. Show empathy\n3. Offer a solution\n4. Sign as 'Customer Support Team'"
-    }]
-  }],
-  "generationConfig": {
-    "temperature": 0.7,
-    "topK": 40,
-    "topP": 0.95,
-    "maxOutputTokens": 1024
-  }
-}
-```
-
-#### Request 3: Generate Email Response - Support
-```
-Name: Handle Technical Support
-Method: POST
-URL: {{base_url}}/v1/models/{{model}}:generateContent?key={{gemini_api_key}}
-
-Headers:
-Content-Type: application/json
-
-Body (raw JSON):
-{
-  "contents": [{
-    "parts": [{
-      "text": "You are a technical support specialist. Generate a helpful response to this support email:\n\nFrom: user@example.com\nSubject: Can't log in\nBody: I forgot my password and can't access my account. Help!\n\nGuidelines:\n1. Acknowledge the issue\n2. Provide step-by-step instructions\n3. Offer alternatives\n4. Sign as 'Technical Support Team'"
-    }]
-  }],
-  "generationConfig": {
-    "temperature": 0.5,
-    "topK": 40,
-    "topP": 0.95,
-    "maxOutputTokens": 1024
-  }
-}
-```
-
-### 4️⃣ Create Test Scripts
-
-In each request, add this test script in the **Tests** tab:
-
-```javascript
-// Test Script for Response Validation
-pm.test("Status code is 200", function () {
-    pm.response.to.have.status(200);
-});
-
-pm.test("Response has candidates", function () {
-    var jsonData = pm.response.json();
-    pm.expect(jsonData).to.have.property('candidates');
-    pm.expect(jsonData.candidates).to.be.an('array');
-    pm.expect(jsonData.candidates.length).to.be.greaterThan(0);
-});
-
-pm.test("Generated text exists", function () {
-    var jsonData = pm.response.json();
-    var text = jsonData.candidates[0].content.parts[0].text;
-    pm.expect(text).to.be.a('string');
-    pm.expect(text.length).to.be.greaterThan(50);
-    
-    // Log the response for review
-    console.log("Generated Response:", text);
-});
-
-pm.test("Response is professional", function () {
-    var jsonData = pm.response.json();
-    var text = jsonData.candidates[0].content.parts[0].text.toLowerCase();
-    
-    // Check for professional elements
-    pm.expect(text).to.include.oneOf(['dear', 'hello', 'hi']);
-    pm.expect(text).to.include.oneOf(['sincerely', 'regards', 'best', 'team']);
-});
-```
-
-### 5️⃣ Create Collection Runner Tests
-
-1. Click **Runner** button in Postman
-2. Select your collection
-3. Set iterations: 3
-4. Add data file (CSV) with test emails:
-
-Create `test_emails.csv`:
-```csv
-email_from,email_subject,email_body,category
-angry.customer@test.com,Worst product ever,This is terrible. Nothing works!,complaint
-confused.user@test.com,How to reset password,I can't remember my password,support
-happy.user@test.com,Great product!,Just wanted to say I love your service,feedback
-```
-
-### 6️⃣ Monitor API Usage
-
-Create a Pre-request Script for the collection:
-```javascript
-// Pre-request Script - Rate Limiting Check
-const lastRequestTime = pm.globals.get("lastRequestTime");
-const currentTime = Date.now();
-
-if (lastRequestTime) {
-    const timeDiff = currentTime - lastRequestTime;
-    if (timeDiff < 1000) { // Less than 1 second
-        console.log("Rate limit protection: Waiting...");
-        setTimeout(function(){}, 1000 - timeDiff);
-    }
-}
-
-pm.globals.set("lastRequestTime", currentTime);
-pm.globals.set("requestCount", (pm.globals.get("requestCount") || 0) + 1);
-
-console.log(`Request #${pm.globals.get("requestCount")} at ${new Date().toLocaleTimeString()}`);
 ```
 
 ---
@@ -576,126 +342,10 @@ logging.basicConfig(
 ## 🧪 Testing the System
 
 ### Unit Tests (Python)
-
-Create `test_email_automation.py`:
-```python
-import unittest
-from unittest.mock import Mock, patch
-from email_processor import EmailProcessor
-from gemini_email import GeminiEmailResponder
-
-class TestEmailAutomation(unittest.TestCase):
-    
-    def setUp(self):
-        self.email_processor = EmailProcessor()
-        self.gemini_responder = GeminiEmailResponder()
-    
-    def test_email_categorization(self):
-        """Test if emails are correctly categorized"""
-        test_cases = [
-            ("I hate this product", "complaint"),
-            ("How do I reset my password?", "product_support"),
-            ("Please add dark mode", "feature_request"),
-            ("Thank you for great service", "general_feedback")
-        ]
-        
-        for body, expected_category in test_cases:
-            email_data = {
-                'subject': 'Test',
-                'body': body,
-                'from': 'test@example.com'
-            }
-            result = self.email_processor.parse_email_for_response(email_data)
-            self.assertEqual(result['category'], expected_category)
-    
-    def test_response_generation(self):
-        """Test if responses are generated"""
-        email_content = {
-            'from': 'test@example.com',
-            'subject': 'Help needed',
-            'body': 'I cannot log in to my account'
-        }
-        
-        response = self.gemini_responder.generate_response(
-            email_content, 
-            email_type='product_support'
-        )
-        
-        self.assertIsNotNone(response)
-        self.assertGreater(len(response), 50)
-
-if __name__ == '__main__':
-    unittest.main()
-```
-
 Run tests:
 ```bash
 python test_email_automation.py
 ```
-
-### Integration Tests (Postman)
-
-Create a test collection with these scenarios:
-1. **Happy Path:** Valid email → Correct categorization → Appropriate response
-2. **Edge Cases:** Empty email, very long email, non-English email
-3. **Error Handling:** Invalid API key, network timeout, rate limiting
-4. **Response Quality:** Check for professionalism, completeness, tone
-
----
-
-## 📝 Assignment Guidelines
-
-### Part 1: Postman Implementation (40%)
-1. Create a complete Postman collection with at least 5 different email scenarios
-2. Implement proper error handling
-3. Add comprehensive test scripts
-4. Document your API calls
-
-**Deliverables:**
-- Exported Postman collection (.json)
-- Environment variables file
-- Screenshots of successful requests
-- 1-page reflection on API behavior
-
-### Part 2: Python Implementation (40%)
-1. Implement the complete email automation system
-2. Add at least 2 new email categories
-3. Improve response quality with better prompts
-4. Add logging and error handling
-
-**Deliverables:**
-- Complete Python code (all 4 files)
-- Test results document
-- Sample email responses (at least 10)
-- Code documentation
-
-### Part 3: Enhancement (20%)
-Choose ONE:
-- Add multi-language support
-- Implement priority queue for urgent emails
-- Create web dashboard for monitoring
-- Add sentiment analysis visualization
-- Implement email threading support
-
-**Deliverables:**
-- Enhanced code
-- Documentation of new features
-- Demonstration video (3-5 minutes)
-
-### Grading Rubric
-- **Functionality (40%):** Does it work as expected?
-- **Code Quality (25%):** Clean, commented, follows best practices
-- **Error Handling (15%):** Graceful handling of edge cases
-- **Documentation (10%):** Clear instructions and comments
-- **Innovation (10%):** Creative enhancements or improvements
-
-### Submission Checklist
-- [ ] All code files included
-- [ ] `.env` file NOT included (only .env.example)
-- [ ] README updated with your specific instructions
-- [ ] Test results documented
-- [ ] Screenshots/video included
-- [ ] No hardcoded credentials in code
 
 ---
 
@@ -704,7 +354,6 @@ Choose ONE:
 ### Resources
 - [Gemini API Documentation](https://ai.google.dev/docs)
 - [Python Email Tutorial](https://realpython.com/python-email/)
-- [Postman Learning Center](https://learning.postman.com/)
 - [Gmail IMAP Settings](https://support.google.com/mail/answer/7126229)
 
 
@@ -721,9 +370,6 @@ A: To prevent processing old emails. You can adjust `days_back` parameter.
 
 **Q: How does email threading work?**
 A: The system uses Message-ID and References headers to maintain conversation chains.
-
-**Q: Can I work in groups?**
-A: Check with your instructor, but typically this is an individual assignment
 
 **Q: What if I exceed my API quota?**
 A: Use the fallback responses implemented in the code, or wait for quota reset
