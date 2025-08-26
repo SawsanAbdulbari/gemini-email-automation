@@ -216,7 +216,7 @@ You should see:
 ```
 ============================================================
    Gemini API Email Response Automation System v4.0
-   Enhanced with Threading & Date Filtering
+   with Threading & Date Filtering
    HAMK Digital and Social Media Analytics
 ============================================================
 Started at: 2025-08-20 18:30:00
