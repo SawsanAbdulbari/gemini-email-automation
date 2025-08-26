@@ -374,9 +374,6 @@ A: The system uses Message-ID and References headers to maintain conversation ch
 **Q: What if I exceed my API quota?**
 A: Use the fallback responses implemented in the code, or wait for quota reset
 
-**Q: How do I test if the fixes work?**
-A: Run `python test/test_email_format_fix.py` to verify all fixes are applied.
-
 ---
 
 ## 📜 License & Ethics
