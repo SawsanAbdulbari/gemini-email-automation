@@ -178,7 +178,6 @@ gemini-email-automation/
 │
 ├── 📁 test/                     # Test suite
 │   ├── test_setup.py             # Setup verification
-│   ├── test_email_format_fix.py  
 │   └── test_email_automation.py  # Unit tests
 │
 ├── .env.example            # Template for credentials
